@@ -1,0 +1,99 @@
+.dashboard-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.dashboard-sidebar {
+  background-color: #111827;
+  color: #f9fafb;
+  padding: 2rem 1rem;
+}
+
+.dashboard-main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background-color: #f3f4f6;
+}
+
+.dashboard-content {
+  padding: 2rem;
+}
+
+.dashboard-overview {
+  display: grid;
+  gap: 2rem;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  color: #4b5563;
+}
+
+.dashboard-primary-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #111827;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px -20px rgba(17, 24, 39, 0.5);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.dashboard-card-value {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.dashboard-card-delta {
+  color: #059669;
+  font-size: 0.875rem;
+}
+
+.dashboard-panel {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px -20px rgba(17, 24, 39, 0.5);
+  padding: 1.5rem;
+}
+
+.dashboard-panel header {
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-panel th,
+.dashboard-panel td {
+  text-align: left;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}

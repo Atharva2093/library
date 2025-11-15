@@ -20,7 +20,7 @@ class Book(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     category = relationship("Category", back_populates="books")
-    sale_items = relationship("SaleItem", back_populates="book")
+    sales = relationship("Sale", back_populates="book")
 
     def __repr__(self) -> str:
         return f"<Book id={self.id} title={self.title!r}>"

@@ -7,6 +7,7 @@ import type { AxiosError } from 'axios';
 
 import Protected from '../../../../components/Protected';
 import api from '../../../../lib/api';
+import type { Category } from '../../../../lib/types';
 
 import '../style.css';
 
@@ -33,8 +34,8 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
     const fetchCategory = async () => {
       setError(null);
       try {
-        const response = await api.get<CategoryResponse>(`/categories/${params.id}`);
-        setName(response.data?.name ?? '');
+        const category = await api.get<Category>(`/categories/${params.id}`);
+        setName(category?.name ?? '');
       } catch (err) {
         console.error(err);
         setError('Unable to load the category. It may have been removed.');
@@ -72,7 +73,9 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm('Delete this category? There may be books assigned to it.');
+    const confirmDelete = window.confirm(
+      'Delete this category? There may be books assigned to it.'
+    );
     if (!confirmDelete) {
       return;
     }
@@ -122,11 +125,20 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-danger" type="button" onClick={handleDelete} disabled={deleteLoading}>
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteLoading}
+            >
               {deleteLoading ? 'Deleting…' : 'Delete'}
             </button>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
-              <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/categories')}>
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={() => router.push('/dashboard/categories')}
+              >
                 Cancel
               </button>
               <button className="btn btn-primary" type="submit" disabled={submitLoading}>

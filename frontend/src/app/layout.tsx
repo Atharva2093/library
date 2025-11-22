@@ -1,21 +1,17 @@
 import type { Metadata } from 'next';
+import { AuthProvider } from '@/contexts/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Bookstore Manager',
-  description: 'Manage inventory, sales, and customers for your bookstore.',
+  title: 'Library Management System',
+  description: 'A comprehensive library management system built with Next.js and FastAPI',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        {/* TODO: Add <Navbar /> or <Sidebar /> components here */}
-        <main>{children}</main>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

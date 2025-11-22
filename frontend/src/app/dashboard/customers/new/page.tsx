@@ -18,9 +18,10 @@ export default function NewCustomerPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (field: 'name' | 'email' | 'phone') => (event: ChangeEvent<HTMLInputElement>) => {
-    setForm((prev: typeof form) => ({ ...prev, [field]: event.target.value }));
-  };
+  const handleChange =
+    (field: 'name' | 'email' | 'phone') => (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev: typeof form) => ({ ...prev, [field]: event.target.value }));
+    };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,11 +87,20 @@ export default function NewCustomerPage() {
 
           <label className="form-control">
             <span>Phone</span>
-            <input type="tel" value={form.phone} onChange={handleChange('phone')} placeholder="Optional" />
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={handleChange('phone')}
+              placeholder="Optional"
+            />
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/customers')}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => router.push('/dashboard/customers')}
+            >
               Cancel
             </button>
             <button className="btn btn-primary" type="submit" disabled={loading}>

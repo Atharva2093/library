@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import Protected from '../../../../components/Protected';
 import api from '../../../../lib/api';
+import type { Book } from '../../../../lib/types';
 
 import '../style.css';
 
@@ -65,16 +66,15 @@ export default function EditBookPage({ params }: EditBookPageProps) {
     const fetchBook = async () => {
       setError(null);
       try {
-        const response = await api.get<BookResponse>(`/books/${params.id}`);
-        const book = response.data;
+        const book = await api.get<Book>(`/books/${params.id}`);
         setForm({
           title: book.title ?? '',
-          author: book.author ?? '',
+          author: book.authors?.[0]?.name ?? '',
           price: book.price != null ? String(book.price) : '',
-          stock: book.stock != null ? String(book.stock) : '',
+          stock: book.stock_quantity != null ? String(book.stock_quantity) : '',
           isbn: book.isbn ?? '',
           description: book.description ?? '',
-          category_id: book.category_id != null ? String(book.category_id) : '',
+          category_id: book.categories?.[0]?.id != null ? String(book.categories[0].id) : '',
         });
       } catch (err) {
         console.error(err);
@@ -90,8 +90,8 @@ export default function EditBookPage({ params }: EditBookPageProps) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get<Category[]>('/categories/');
-        setCategories(response.data ?? []);
+        const categories = await api.get<Category[]>('/categories/');
+        setCategories(categories ?? []);
       } catch (err) {
         console.error(err);
         setError((prev: string | null) => prev ?? 'Unable to load categories.');
@@ -103,9 +103,11 @@ export default function EditBookPage({ params }: EditBookPageProps) {
     void fetchCategories();
   }, []);
 
-  const handleChange = (field: keyof EditBookForm) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev: EditBookForm) => ({ ...prev, [field]: event.target.value }));
-  };
+  const handleChange =
+    (field: keyof EditBookForm) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      setForm((prev: EditBookForm) => ({ ...prev, [field]: event.target.value }));
+    };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -182,7 +184,9 @@ export default function EditBookPage({ params }: EditBookPageProps) {
         <header className="books-header">
           <div>
             <h2>Edit Book</h2>
-            <p className="muted-text">Update the information for this book or remove it from the catalog.</p>
+            <p className="muted-text">
+              Update the information for this book or remove it from the catalog.
+            </p>
           </div>
           <Link className="btn btn-secondary" href="/dashboard/books">
             Back to list
@@ -203,11 +207,23 @@ export default function EditBookPage({ params }: EditBookPageProps) {
             </label>
             <label className="form-control">
               <span>Price</span>
-              <input type="number" step="0.01" value={form.price} onChange={handleChange('price')} required />
+              <input
+                type="number"
+                step="0.01"
+                value={form.price}
+                onChange={handleChange('price')}
+                required
+              />
             </label>
             <label className="form-control">
               <span>Stock</span>
-              <input type="number" min="0" value={form.stock} onChange={handleChange('stock')} required />
+              <input
+                type="number"
+                min="0"
+                value={form.stock}
+                onChange={handleChange('stock')}
+                required
+              />
             </label>
             <label className="form-control">
               <span>ISBN</span>
@@ -215,7 +231,12 @@ export default function EditBookPage({ params }: EditBookPageProps) {
             </label>
             <label className="form-control">
               <span>Category</span>
-              <select value={form.category_id} onChange={handleChange('category_id')} required disabled={loadingCategories}>
+              <select
+                value={form.category_id}
+                onChange={handleChange('category_id')}
+                required
+                disabled={loadingCategories}
+              >
                 <option value="">Select category</option>
                 {categories.map((category: Category) => (
                   <option key={category.id} value={category.id}>
@@ -232,14 +253,27 @@ export default function EditBookPage({ params }: EditBookPageProps) {
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-danger" type="button" onClick={handleDelete} disabled={deleteLoading}>
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteLoading}
+            >
               {deleteLoading ? 'Deleting…' : 'Delete'}
             </button>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
-              <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/books')}>
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={() => router.push('/dashboard/books')}
+              >
                 Cancel
               </button>
-              <button className="btn btn-primary" type="submit" disabled={submitLoading || loadingCategories}>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={submitLoading || loadingCategories}
+              >
                 {submitLoading ? 'Saving…' : 'Save Changes'}
               </button>
             </div>

@@ -7,6 +7,7 @@ import type { AxiosError } from 'axios';
 
 import Protected from '../../../../components/Protected';
 import api from '../../../../lib/api';
+import type { Customer } from '../../../../lib/types';
 
 import '../style.css';
 
@@ -37,8 +38,7 @@ export default function EditCustomerPage({ params }: EditCustomerPageProps) {
     const fetchCustomer = async () => {
       setError(null);
       try {
-        const response = await api.get<CustomerResponse>(`/customers/${params.id}`);
-        const customer = response.data;
+        const customer = await api.get<Customer>(`/customers/${params.id}`);
         setForm({
           name: customer?.name ?? '',
           email: customer?.email ?? '',
@@ -55,9 +55,10 @@ export default function EditCustomerPage({ params }: EditCustomerPageProps) {
     void fetchCustomer();
   }, [params.id]);
 
-  const handleChange = (field: 'name' | 'email' | 'phone') => (event: ChangeEvent<HTMLInputElement>) => {
-    setForm((prev: typeof form) => ({ ...prev, [field]: event.target.value }));
-  };
+  const handleChange =
+    (field: 'name' | 'email' | 'phone') => (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev: typeof form) => ({ ...prev, [field]: event.target.value }));
+    };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -130,7 +131,9 @@ export default function EditCustomerPage({ params }: EditCustomerPageProps) {
         <header className="customers-header">
           <div>
             <h2>Edit Customer</h2>
-            <p className="muted-text">Update customer contact information or remove them from the list.</p>
+            <p className="muted-text">
+              Update customer contact information or remove them from the list.
+            </p>
           </div>
           <Link className="btn btn-secondary" href="/dashboard/customers">
             Back to list
@@ -152,15 +155,29 @@ export default function EditCustomerPage({ params }: EditCustomerPageProps) {
 
           <label className="form-control">
             <span>Phone</span>
-            <input type="tel" value={form.phone} onChange={handleChange('phone')} placeholder="Optional" />
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={handleChange('phone')}
+              placeholder="Optional"
+            />
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-danger" type="button" onClick={handleDelete} disabled={deleteLoading}>
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteLoading}
+            >
               {deleteLoading ? 'Deleting…' : 'Delete'}
             </button>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
-              <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/customers')}>
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={() => router.push('/dashboard/customers')}
+              >
                 Cancel
               </button>
               <button className="btn btn-primary" type="submit" disabled={submitLoading}>

@@ -1,0 +1,408 @@
+'use client';
+
+import React, { useState } from 'react';
+import { ExportButton, DateRangeExportForm } from '@/components/ui/ExportComponents';
+
+interface ExportSettings {
+  defaultFormat: 'csv' | 'excel' | 'json' | 'pdf';
+  includeHeaders: boolean;
+  dateFormat: 'ISO' | 'US' | 'EU';
+  timezone: string;
+  autoExportSchedule: boolean;
+  exportEmail: string;
+  compressionEnabled: boolean;
+  maxFileSize: number;
+}
+
+interface ImportSettings {
+  allowedFormats: string[];
+  maxFileSize: number;
+  validateData: boolean;
+  backupBeforeImport: boolean;
+  skipDuplicates: boolean;
+  requireApproval: boolean;
+}
+
+const ExportImportSettings = () => {
+  const [activeTab, setActiveTab] = useState<'export' | 'import' | 'schedule'>('export');
+  
+  const [exportSettings, setExportSettings] = useState<ExportSettings>({
+    defaultFormat: 'csv',
+    includeHeaders: true,
+    dateFormat: 'ISO',
+    timezone: 'UTC',
+    autoExportSchedule: false,
+    exportEmail: '',
+    compressionEnabled: false,
+    maxFileSize: 50,
+  });
+
+  const [importSettings, setImportSettings] = useState<ImportSettings>({
+    allowedFormats: ['csv', 'excel', 'json'],
+    maxFileSize: 10,
+    validateData: true,
+    backupBeforeImport: true,
+    skipDuplicates: true,
+    requireApproval: false,
+  });
+
+  const [scheduleSettings, setScheduleSettings] = useState({
+    dailyExports: false,
+    weeklyExports: true,
+    monthlyExports: true,
+    exportTypes: ['sales', 'inventory'],
+    emailRecipients: ['admin@bookstore.com'],
+    exportTime: '09:00',
+    exportDay: 'monday',
+  });
+
+  const handleExportSettingsChange = (key: keyof ExportSettings, value: any) => {
+    setExportSettings(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleImportSettingsChange = (key: keyof ImportSettings, value: any) => {
+    setImportSettings(prev => ({ ...prev, [key]: value }));
+  };
+
+  const saveSettings = async () => {
+    try {
+      // In a real application, this would save to the backend
+      console.log('Saving settings:', { exportSettings, importSettings, scheduleSettings });
+      alert('Settings saved successfully!');
+    } catch (error) {
+      console.error('Failed to save settings:', error);
+      alert('Failed to save settings. Please try again.');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-900">Export & Import Settings</h1>
+        <p className="mt-2 text-sm text-gray-700">
+          Configure export and import preferences for your bookstore data.
+        </p>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-8">
+          <button
+            onClick={() => setActiveTab('export')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'export'
+                ? 'border-green-500 text-green-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Export Settings
+          </button>
+          <button
+            onClick={() => setActiveTab('import')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'import'
+                ? 'border-green-500 text-green-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Import Settings
+          </button>
+          <button
+            onClick={() => setActiveTab('schedule')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'schedule'
+                ? 'border-green-500 text-green-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Scheduled Reports
+          </button>
+        </nav>
+      </div>
+
+      {/* Tab Content */}
+      <div className="bg-white shadow rounded-lg">
+        {/* Export Settings Tab */}
+        {activeTab === 'export' && (
+          <div className="p-6 space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Export Preferences</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Default Export Format
+                  </label>
+                  <select
+                    value={exportSettings.defaultFormat}
+                    onChange={(e) => handleExportSettingsChange('defaultFormat', e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                  >
+                    <option value="csv">CSV</option>
+                    <option value="excel">Excel</option>
+                    <option value="json">JSON</option>
+                    <option value="pdf">PDF</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Date Format
+                  </label>
+                  <select
+                    value={exportSettings.dateFormat}
+                    onChange={(e) => handleExportSettingsChange('dateFormat', e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                  >
+                    <option value="ISO">ISO 8601 (YYYY-MM-DD)</option>
+                    <option value="US">US Format (MM/DD/YYYY)</option>
+                    <option value="EU">EU Format (DD/MM/YYYY)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Timezone
+                  </label>
+                  <select
+                    value={exportSettings.timezone}
+                    onChange={(e) => handleExportSettingsChange('timezone', e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                  >
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">Eastern Time (ET)</option>
+                    <option value="America/Chicago">Central Time (CT)</option>
+                    <option value="America/Denver">Mountain Time (MT)</option>
+                    <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Max File Size (MB)
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={exportSettings.maxFileSize}
+                    onChange={(e) => handleExportSettingsChange('maxFileSize', parseInt(e.target.value))}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div className="flex items-center">
+                  <input
+                    id="includeHeaders"
+                    type="checkbox"
+                    checked={exportSettings.includeHeaders}
+                    onChange={(e) => handleExportSettingsChange('includeHeaders', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="includeHeaders" className="ml-2 block text-sm text-gray-900">
+                    Include column headers in exports
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    id="compressionEnabled"
+                    type="checkbox"
+                    checked={exportSettings.compressionEnabled}
+                    onChange={(e) => handleExportSettingsChange('compressionEnabled', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="compressionEnabled" className="ml-2 block text-sm text-gray-900">
+                    Enable file compression for large exports
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Import Settings Tab */}
+        {activeTab === 'import' && (
+          <div className="p-6 space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Import Preferences</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Allowed File Formats
+                  </label>
+                  <div className="space-y-2">
+                    {['csv', 'excel', 'json', 'xml'].map(format => (
+                      <div key={format} className="flex items-center">
+                        <input
+                          id={format}
+                          type="checkbox"
+                          checked={importSettings.allowedFormats.includes(format)}
+                          onChange={(e) => {
+                            const newFormats = e.target.checked
+                              ? [...importSettings.allowedFormats, format]
+                              : importSettings.allowedFormats.filter(f => f !== format);
+                            handleImportSettingsChange('allowedFormats', newFormats);
+                          }}
+                          className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor={format} className="ml-2 block text-sm text-gray-900 capitalize">
+                          {format}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Max Import File Size (MB)
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={importSettings.maxFileSize}
+                    onChange={(e) => handleImportSettingsChange('maxFileSize', parseInt(e.target.value))}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div className="flex items-center">
+                  <input
+                    id="validateData"
+                    type="checkbox"
+                    checked={importSettings.validateData}
+                    onChange={(e) => handleImportSettingsChange('validateData', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="validateData" className="ml-2 block text-sm text-gray-900">
+                    Validate data before import
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    id="backupBeforeImport"
+                    type="checkbox"
+                    checked={importSettings.backupBeforeImport}
+                    onChange={(e) => handleImportSettingsChange('backupBeforeImport', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="backupBeforeImport" className="ml-2 block text-sm text-gray-900">
+                    Create backup before importing
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    id="skipDuplicates"
+                    type="checkbox"
+                    checked={importSettings.skipDuplicates}
+                    onChange={(e) => handleImportSettingsChange('skipDuplicates', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="skipDuplicates" className="ml-2 block text-sm text-gray-900">
+                    Skip duplicate records during import
+                  </label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    id="requireApproval"
+                    type="checkbox"
+                    checked={importSettings.requireApproval}
+                    onChange={(e) => handleImportSettingsChange('requireApproval', e.target.checked)}
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="requireApproval" className="ml-2 block text-sm text-gray-900">
+                    Require admin approval for imports
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Scheduled Reports Tab */}
+        {activeTab === 'schedule' && (
+          <div className="p-6 space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Automated Report Scheduling</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-md font-medium text-gray-900 mb-3">Report Frequency</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center">
+                      <input
+                        id="dailyExports"
+                        type="checkbox"
+                        checked={scheduleSettings.dailyExports}
+                        onChange={(e) => setScheduleSettings(prev => ({ ...prev, dailyExports: e.target.checked }))}
+                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="dailyExports" className="ml-2 block text-sm text-gray-900">
+                        Daily reports at 
+                        <input
+                          type="time"
+                          value={scheduleSettings.exportTime}
+                          onChange={(e) => setScheduleSettings(prev => ({ ...prev, exportTime: e.target.value }))}
+                          className="ml-2 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                        />
+                      </label>
+                    </div>
+
+                    <div className="flex items-center">
+                      <input
+                        id="weeklyExports"
+                        type="checkbox"
+                        checked={scheduleSettings.weeklyExports}
+                        onChange={(e) => setScheduleSettings(prev => ({ ...prev, weeklyExports: e.target.checked }))}
+                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="weeklyExports" className="ml-2 block text-sm text-gray-900">
+                        Weekly reports on 
+                        <select
+                          value={scheduleSettings.exportDay}
+                          onChange={(e) => setScheduleSettings(prev => ({ ...prev, exportDay: e.target.value }))}
+                          className="ml-2 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                        >
+                          <option value="monday">Monday</option>
+                          <option value="tuesday">Tuesday</option>
+                          <option value="wednesday">Wednesday</option>
+                          <option value="thursday">Thursday</option>
+                          <option value="friday">Friday</option>
+                          <option value="saturday">Saturday</option>
+                          <option value="sunday">Sunday</option>
+                        </select>
+                      </label>
+                    </div>
+
+                    <div className="flex items-center">
+                      <input
+                        id="monthlyExports"
+                        type="checkbox"
+                        checked={scheduleSettings.monthlyExports}
+                        onChange={(e) => setScheduleSettings(prev => ({ ...prev, monthlyExports: e.target.checked }))}
+                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="monthlyExports" className="ml-2 block text-sm text-gray-900">
+                        Monthly reports on the 1st
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Recipients (comma-separated)
+                  </label>
+                  <textarea
+                    value={scheduleSettings.emailRecipients.join(', ')}\n                    onChange={(e) => setScheduleSettings(prev => ({ \n                      ...prev, \n                      emailRecipients: e.target.value.split(',').map(email => email.trim()) \n                    }))}\n                    rows={3}\n                    className=\"block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm\"\n                    placeholder=\"admin@bookstore.com, manager@bookstore.com\"\n                  />\n                </div>\n\n                <div>\n                  <label className=\"block text-sm font-medium text-gray-700 mb-2\">\n                    Report Types to Include\n                  </label>\n                  <div className=\"space-y-2\">\n                    {['sales', 'inventory', 'customers', 'financial'].map(type => (\n                      <div key={type} className=\"flex items-center\">\n                        <input\n                          id={`schedule-${type}`}\n                          type=\"checkbox\"\n                          checked={scheduleSettings.exportTypes.includes(type)}\n                          onChange={(e) => {\n                            const newTypes = e.target.checked\n                              ? [...scheduleSettings.exportTypes, type]\n                              : scheduleSettings.exportTypes.filter(t => t !== type);\n                            setScheduleSettings(prev => ({ ...prev, exportTypes: newTypes }));\n                          }}\n                          className=\"h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded\"\n                        />\n                        <label htmlFor={`schedule-${type}`} className=\"ml-2 block text-sm text-gray-900 capitalize\">\n                          {type} Report\n                        </label>\n                      </div>\n                    ))}\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        )}\n\n        {/* Actions */}\n        <div className=\"bg-gray-50 px-6 py-3 flex justify-between items-center\">\n          <div className=\"text-sm text-gray-500\">\n            Changes will be applied immediately after saving.\n          </div>\n          <div className=\"flex space-x-3\">\n            <button\n              type=\"button\"\n              className=\"bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500\"\n            >\n              Reset to Defaults\n            </button>\n            <button\n              onClick={saveSettings}\n              className=\"bg-green-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500\"\n            >\n              Save Settings\n            </button>\n          </div>\n        </div>\n      </div>\n\n      {/* Test Export Section */}\n      <div className=\"bg-white shadow rounded-lg p-6\">\n        <h3 className=\"text-lg font-medium text-gray-900 mb-4\">Test Export Functionality</h3>\n        <p className=\"text-sm text-gray-600 mb-4\">\n          Test your export settings with sample data to ensure everything is working correctly.\n        </p>\n        <div className=\"flex flex-wrap gap-3\">\n          <ExportButton\n            reportType=\"sales\"\n            label=\"Test Sales Export\"\n          />\n          <ExportButton\n            reportType=\"inventory\"\n            label=\"Test Inventory Export\"\n          />\n          <ExportButton\n            reportType=\"customers\"\n            label=\"Test Customer Export\"\n          />\n          <ExportButton\n            reportType=\"financial\"\n            label=\"Test Financial Export\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default ExportImportSettings;

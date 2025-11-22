@@ -63,7 +63,11 @@ export default function NewCategoryPage() {
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/categories')}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => router.push('/dashboard/categories')}
+            >
               Cancel
             </button>
             <button className="btn btn-primary" type="submit" disabled={loading}>

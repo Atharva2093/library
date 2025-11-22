@@ -46,8 +46,8 @@ export default function NewBookPage() {
     const fetchCategories = async () => {
       setError(null);
       try {
-        const response = await api.get<Category[]>('/categories/');
-        setCategories(response.data ?? []);
+        const categories = await api.get<Category[]>('/categories/');
+        setCategories(categories ?? []);
       } catch (err) {
         console.error(err);
         setError('Unable to load categories. Please try again before submitting.');
@@ -59,9 +59,11 @@ export default function NewBookPage() {
     void fetchCategories();
   }, []);
 
-  const handleChange = (field: keyof CreateBookForm) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev: CreateBookForm) => ({ ...prev, [field]: event.target.value }));
-  };
+  const handleChange =
+    (field: keyof CreateBookForm) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      setForm((prev: CreateBookForm) => ({ ...prev, [field]: event.target.value }));
+    };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -130,11 +132,23 @@ export default function NewBookPage() {
             </label>
             <label className="form-control">
               <span>Price</span>
-              <input type="number" step="0.01" value={form.price} onChange={handleChange('price')} required />
+              <input
+                type="number"
+                step="0.01"
+                value={form.price}
+                onChange={handleChange('price')}
+                required
+              />
             </label>
             <label className="form-control">
               <span>Stock</span>
-              <input type="number" min="0" value={form.stock} onChange={handleChange('stock')} required />
+              <input
+                type="number"
+                min="0"
+                value={form.stock}
+                onChange={handleChange('stock')}
+                required
+              />
             </label>
             <label className="form-control">
               <span>ISBN</span>
@@ -142,7 +156,12 @@ export default function NewBookPage() {
             </label>
             <label className="form-control">
               <span>Category</span>
-              <select value={form.category_id} onChange={handleChange('category_id')} required disabled={loadingCategories}>
+              <select
+                value={form.category_id}
+                onChange={handleChange('category_id')}
+                required
+                disabled={loadingCategories}
+              >
                 <option value="">Select category</option>
                 {categories.map((category: Category) => (
                   <option key={category.id} value={category.id}>
@@ -159,10 +178,18 @@ export default function NewBookPage() {
           </label>
 
           <div className="form-actions">
-            <button className="btn btn-secondary" type="button" onClick={() => router.push('/dashboard/books')}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => router.push('/dashboard/books')}
+            >
               Cancel
             </button>
-            <button className="btn btn-primary" type="submit" disabled={submitLoading || loadingCategories}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={submitLoading || loadingCategories}
+            >
               {submitLoading ? 'Saving…' : 'Save Book'}
             </button>
           </div>

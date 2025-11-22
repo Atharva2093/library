@@ -25,8 +25,8 @@ export default function CategoriesPage() {
     }
     setError(null);
     try {
-      const response = await api.get<Category[]>('/categories/');
-      setCategories(response.data ?? []);
+      const categories = await api.get<Category[]>('/categories/');
+      setCategories(categories ?? []);
     } catch (err) {
       console.error(err);
       setError('Unable to load categories. Please try again.');
@@ -40,7 +40,9 @@ export default function CategoriesPage() {
   }, [fetchCategories]);
 
   const handleDelete = async (id: number) => {
-    const confirmDelete = window.confirm('Delete this category? Related books may need reassignment.');
+    const confirmDelete = window.confirm(
+      'Delete this category? Related books may need reassignment.'
+    );
     if (!confirmDelete) {
       return;
     }
@@ -92,7 +94,10 @@ export default function CategoriesPage() {
                     <td>{category.name}</td>
                     <td>
                       <div className="categories-actions">
-                        <Link className="btn btn-secondary" href={`/dashboard/categories/${category.id}`}>
+                        <Link
+                          className="btn btn-secondary"
+                          href={`/dashboard/categories/${category.id}`}
+                        >
                           Edit
                         </Link>
                         <button

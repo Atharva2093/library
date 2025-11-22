@@ -1,0 +1,9 @@
+2025-11-22 15:28:20,456 - INFO - Starting auto-push service (every 8.0 minutes)
+2025-11-22 15:28:20,457 - INFO - Repository path: F:\projects\library
+2025-11-22 15:28:20,457 - INFO - Checking for changes...
+2025-11-22 15:28:20,501 - INFO - Found 76 changed files
+2025-11-22 15:28:20,501 - INFO - Limiting to first 20 files out of 76 changed files
+2025-11-22 15:28:20,547 - ERROR - Git command failed: git add ackend/app/db/init_db.py backend/app/models/role.py backend/app/models/sale.py backend/app/models/user.py frontend/next.config.js frontend/package-lock.json frontend/package.json frontend/src/app/dashboard/books/[id]/page.tsx frontend/src/app/dashboard/books/new/page.tsx frontend/src/app/dashboard/books/page.tsx frontend/src/app/dashboard/books/style.css frontend/src/app/dashboard/categories/[id]/page.tsx frontend/src/app/dashboard/categories/new/page.tsx frontend/src/app/dashboard/categories/page.tsx frontend/src/app/dashboard/categories/style.css frontend/src/app/dashboard/customers/[id]/page.tsx frontend/src/app/dashboard/customers/new/page.tsx frontend/src/app/dashboard/customers/page.tsx frontend/src/app/dashboard/customers/style.css frontend/src/app/dashboard/dashboard.css
+2025-11-22 15:28:20,548 - ERROR - Error: fatal: pathspec 'ackend/app/db/init_db.py' did not match any files
+
+2025-11-22 15:28:20,548 - INFO - Waiting 8.0 minutes until next push...

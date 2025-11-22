@@ -12,7 +12,8 @@ export default function Protected({ children }: ProtectedProps) {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    const token = typeof window !== 'undefined' ? window.localStorage.getItem('access_token') : null;
+    const token =
+      typeof window !== 'undefined' ? window.localStorage.getItem('access_token') : null;
     if (!token) {
       router.replace('/login');
       return;

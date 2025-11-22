@@ -42,7 +42,7 @@ export default function LoginPage() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             required
             style={{ padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #d1d5db' }}
             autoComplete="email"
@@ -53,15 +53,13 @@ export default function LoginPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
             style={{ padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #d1d5db' }}
             autoComplete="current-password"
           />
         </label>
-        {error ? (
-          <p style={{ color: '#b91c1c' }}>{error}</p>
-        ) : null}
+        {error ? <p style={{ color: '#b91c1c' }}>{error}</p> : null}
         <button
           type="submit"
           disabled={loading}

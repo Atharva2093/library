@@ -1,14 +1,8 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Table, Text
+from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
-
-user_roles = Table(
-    "user_roles",
-    Base.metadata,
-    Column("user_id", Integer, ForeignKey("users.id"), primary_key=True),
-    Column("role_id", Integer, ForeignKey("roles.id"), primary_key=True),
-)
+from app.models.user import user_roles  # Import the association table from user.py
 
 
 class Role(Base):
@@ -18,6 +12,7 @@ class Role(Base):
     name = Column(String(100), unique=True, nullable=False)
     description = Column(Text, nullable=True)
 
+    # Relationship to users
     users = relationship("User", secondary=user_roles, back_populates="roles")
 
     def __repr__(self) -> str:

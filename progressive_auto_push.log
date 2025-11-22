@@ -1,0 +1,144 @@
+2025-11-22 21:47:27,408 - INFO - Repository: F:\projects\library
+2025-11-22 21:47:27,408 - INFO - Files per push: 5
+2025-11-22 21:47:27,409 - INFO - Starting interval: 10 minutes
+2025-11-22 21:47:27,410 - INFO - Interval increases by 1 minute after each push
+2025-11-22 21:47:27,411 - INFO - Press Ctrl+C to stop
+2025-11-22 21:50:08,375 - INFO - Starting Progressive Auto-Push Service
+2025-11-22 21:50:08,375 - INFO - Repository: F:\projects\library
+2025-11-22 21:50:08,376 - INFO - Files per push: 5
+2025-11-22 21:50:08,376 - INFO - Starting interval: 10 minutes
+2025-11-22 21:50:08,376 - INFO - Interval increases by 1 minute after each push
+2025-11-22 21:50:08,376 - INFO - Press Ctrl+C to stop
+2025-11-22 21:50:08,377 - INFO - Next push scheduled for 22:00:08 (10 minutes)
+2025-11-22 21:57:27,419 - INFO - Push #1 - Checking for files to push...
+2025-11-22 21:57:27,507 - INFO - Selected 5 files to push: ['scripts/README_PROGRESSIVE_PUSH.md', 'frontend/package-lock.json', 'frontend/package.json', 'frontend/tsconfig.json', 'frontend/.eslintrc.json']
+2025-11-22 21:57:27,651 - ERROR - Git command failed: git status --porcelain --cached
+2025-11-22 21:57:27,652 - ERROR - Error: error: unknown option `cached'
+usage: git status [<options>] [--] [<pathspec>...]
+
+    -v, --[no-]verbose    be verbose
+    -s, --[no-]short      show status concisely
+    -b, --[no-]branch     show branch information
+    --[no-]show-stash     show stash information
+    --[no-]ahead-behind   compute full ahead/behind values
+    --[no-]porcelain[=<version>]
+                          machine-readable output
+    --[no-]long           show status in long format (default)
+    -z, --[no-]null       terminate entries with NUL
+    -u, --[no-]untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --[no-]ignored[=<mode>]
+                          show ignored files, optional modes: traditional, matching, no. (Default: traditional)
+    --[no-]ignore-submodules[=<when>]
+                          ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)
+    --[no-]column[=<style>]
+                          list untracked files in columns
+    --no-renames          do not detect renames
+    --renames             opposite of --no-renames
+    -M, --find-renames[=<n>]
+                          detect renames, optionally set similarity index
+
+
+2025-11-22 21:57:27,652 - INFO - No staged changes to commit
+2025-11-22 21:59:55,953 - INFO - Starting Fixed-Interval Auto-Push Service
+2025-11-22 21:59:55,954 - INFO - Push interval: Every 3 minutes
+2025-11-22 21:59:55,954 - INFO - Repository: F:\projects\library
+2025-11-22 21:59:55,954 - INFO - Files per push: 5
+2025-11-22 21:59:55,954 - INFO - Starting interval: 3 minutes
+2025-11-22 21:59:55,955 - INFO - Press Ctrl+C to stop
+2025-11-22 21:59:55,955 - INFO - Next push scheduled for 22:02:55 (3 minutes)
+2025-11-22 22:00:08,378 - INFO - Push #1 - Checking for files to push...
+2025-11-22 22:00:08,466 - INFO - Selected 5 files to push: ['scripts/README_PROGRESSIVE_PUSH.md', 'frontend/.eslintrc.json', 'frontend/package-lock.json', 'frontend/package.json', 'frontend/tsconfig.json']
+2025-11-22 22:00:08,573 - ERROR - Git command failed: git status --porcelain --cached
+2025-11-22 22:00:08,574 - ERROR - Error: error: unknown option `cached'
+usage: git status [<options>] [--] [<pathspec>...]
+
+    -v, --[no-]verbose    be verbose
+    -s, --[no-]short      show status concisely
+    -b, --[no-]branch     show branch information
+    --[no-]show-stash     show stash information
+    --[no-]ahead-behind   compute full ahead/behind values
+    --[no-]porcelain[=<version>]
+                          machine-readable output
+    --[no-]long           show status in long format (default)
+    -z, --[no-]null       terminate entries with NUL
+    -u, --[no-]untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --[no-]ignored[=<mode>]
+                          show ignored files, optional modes: traditional, matching, no. (Default: traditional)
+    --[no-]ignore-submodules[=<when>]
+                          ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)
+    --[no-]column[=<style>]
+                          list untracked files in columns
+    --no-renames          do not detect renames
+    --renames             opposite of --no-renames
+    -M, --find-renames[=<n>]
+                          detect renames, optionally set similarity index
+
+
+2025-11-22 22:00:08,574 - INFO - No staged changes to commit
+2025-11-22 22:00:08,575 - INFO - Next interval will be 11 minutes
+2025-11-22 22:00:08,575 - INFO - Next push scheduled for 22:11:08 (11 minutes)
+2025-11-22 22:02:55,956 - INFO - Push #1 - Checking for files to push...
+2025-11-22 22:02:56,074 - INFO - Selected 5 files to push: ['scripts/README_PROGRESSIVE_PUSH.md', 'frontend/.eslintrc.json', 'frontend/package-lock.json', 'frontend/package.json', 'frontend/tsconfig.json']
+2025-11-22 22:02:56,246 - ERROR - Git command failed: git status --porcelain --cached
+2025-11-22 22:02:56,247 - ERROR - Error: error: unknown option `cached'
+usage: git status [<options>] [--] [<pathspec>...]
+
+    -v, --[no-]verbose    be verbose
+    -s, --[no-]short      show status concisely
+    -b, --[no-]branch     show branch information
+    --[no-]show-stash     show stash information
+    --[no-]ahead-behind   compute full ahead/behind values
+    --[no-]porcelain[=<version>]
+                          machine-readable output
+    --[no-]long           show status in long format (default)
+    -z, --[no-]null       terminate entries with NUL
+    -u, --[no-]untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --[no-]ignored[=<mode>]
+                          show ignored files, optional modes: traditional, matching, no. (Default: traditional)
+    --[no-]ignore-submodules[=<when>]
+                          ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)
+    --[no-]column[=<style>]
+                          list untracked files in columns
+    --no-renames          do not detect renames
+    --renames             opposite of --no-renames
+    -M, --find-renames[=<n>]
+                          detect renames, optionally set similarity index
+
+
+2025-11-22 22:02:56,248 - INFO - No staged changes to commit
+2025-11-22 22:02:56,249 - INFO - Next push scheduled for 22:05:56 (3 minutes)
+2025-11-22 22:05:14,785 - INFO - Auto-Push service stopped by user
+2025-11-22 22:05:14,786 - INFO - Total pushes completed: 1
+2025-11-22 22:08:27,688 - INFO - Push #2 - Checking for files to push...
+2025-11-22 22:08:27,776 - INFO - Selected 5 files to push: ['frontend/.prettierrc.json', 'backend/app/models/role.py', 'backend/app/models/sale.py', 'backend/app/models/user.py', 'frontend/next.config.js']
+2025-11-22 22:08:27,902 - ERROR - Git command failed: git status --porcelain --cached
+2025-11-22 22:08:27,902 - ERROR - Error: error: unknown option `cached'
+usage: git status [<options>] [--] [<pathspec>...]
+
+    -v, --[no-]verbose    be verbose
+    -s, --[no-]short      show status concisely
+    -b, --[no-]branch     show branch information
+    --[no-]show-stash     show stash information
+    --[no-]ahead-behind   compute full ahead/behind values
+    --[no-]porcelain[=<version>]
+                          machine-readable output
+    --[no-]long           show status in long format (default)
+    -z, --[no-]null       terminate entries with NUL
+    -u, --[no-]untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --[no-]ignored[=<mode>]
+                          show ignored files, optional modes: traditional, matching, no. (Default: traditional)
+    --[no-]ignore-submodules[=<when>]
+                          ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)
+    --[no-]column[=<style>]
+                          list untracked files in columns
+    --no-renames          do not detect renames
+    --renames             opposite of --no-renames
+    -M, --find-renames[=<n>]
+                          detect renames, optionally set similarity index
+
+
+2025-11-22 22:08:27,903 - INFO - No staged changes to commit

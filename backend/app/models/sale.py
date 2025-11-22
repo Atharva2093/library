@@ -19,6 +19,7 @@ class Sale(Base):
     # Relationships
     book = relationship("Book", back_populates="sales")
     customer = relationship("Customer", back_populates="sales")
+    items = relationship("SaleItem", back_populates="sale", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Sale(id={self.id}, book_id={self.book_id}, total={self.total_amount})>"
